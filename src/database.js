@@ -1,12 +1,11 @@
 const { Sequelize } = require('sequelize');
+const path = require('path');
 require('dotenv').config();
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialect: 'postgres',
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: process.env.DATABASE_URL || path.join(__dirname, '..', 'database.sqlite'),
   logging: false,
-  dialectOptions: process.env.NODE_ENV === 'production' ? {
-    ssl: { require: true, rejectUnauthorized: false }
-  } : {}
 });
 
 module.exports = sequelize;
